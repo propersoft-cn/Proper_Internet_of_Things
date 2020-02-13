@@ -1,25 +1,21 @@
 package cn.propersoft.IoT.demo.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(description = "DemoVO")
 public class DemoVO {
-
-    @Getter
-    @Setter
+    @ApiModelProperty(value = "DemoId")
     private String id;
-
-    @Getter
-    @Setter
+    @ApiModelProperty(value = "Demo名称")
     private String name;
-
-    @Getter
-    @Setter
+    @ApiModelProperty(value = "Demo名称2")
     private String name2;
-
-    @Getter
-    @Setter
+    @ApiModelProperty(value = "Demo名称3")
     private String name3;
 
 }

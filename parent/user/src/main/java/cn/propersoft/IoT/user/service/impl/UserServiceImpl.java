@@ -2,6 +2,8 @@ package cn.propersoft.IoT.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.user.entity.UserEntity;
@@ -48,12 +50,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO createUser(UserVO userVO) {
-        Optional<UserEntity> one = userRepositroy.findById(userVO.getId());
+        Optional<UserEntity> one = userRepositroy.findByUsername(userVO.getUsername());
         if (one.isPresent()) {
             throw new BizException(CommonEnum.BUSINESS_ERROR);
         } else {
             UserEntity userEntity = new UserEntity();
             BeanUtil.copyProperties(userVO, userEntity);
+            Digester md5 = new Digester(DigestAlgorithm.MD5);
+            String digestHex = md5.digestHex(userEntity.getPassword());
+            userEntity.setPassword(digestHex);
             UserEntity save = userRepositroy.save(userEntity);
             userVO = new UserVO();
             BeanUtil.copyProperties(save, userVO);
@@ -67,12 +72,14 @@ public class UserServiceImpl implements UserService {
         if (optional.isPresent()) {
             UserEntity userEntity = optional.get();
             String password = userEntity.getPassword();
-            if (StrUtil.equals(password, oldPassWord)) {
-                userEntity.setPassword(newPassWord);
+            Digester md5 = new Digester(DigestAlgorithm.MD5);
+            String digestHex = md5.digestHex(oldPassWord);
+            if (StrUtil.equals(password, digestHex)) {
+                userEntity.setPassword(md5.digestHex(newPassWord));
                 userRepositroy.save(userEntity);
                 return true;
             } else {
-                throw new BizException("500", "旧密码错误");
+                throw new BizException(CommonEnum.USER_PASSWORD_WRONG);
             }
         } else {
             throw new BizException(CommonEnum.BUSINESS_ERROR);

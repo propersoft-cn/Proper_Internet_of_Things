@@ -1,32 +1,28 @@
 package cn.propersoft.IoT.auth.controller;
 
-import cn.propersoft.IoT.auth.annotation.UserLoginToken;
 import cn.propersoft.IoT.auth.service.AuthService;
 import cn.propersoft.IoT.response.ResultBody;
-import cn.propersoft.IoT.user.entity.UserEntity;
 import cn.propersoft.IoT.user.vo.UserVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api(tags = "认证接口")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
     @ResponseBody
-    @PostMapping("/auth/login")
-    public ResultBody login(UserEntity userEntity) {
-        UserVO login = authService.login(userEntity);
-        return ResultBody.success(login);
+    @ApiOperation(value = "获取token")
+    @PostMapping("/login")
+    public ResultBody login(@ApiParam UserVO userVO) {
+        UserVO login = authService.login(userVO);
+        return ResultBody.success(login.getToken());
     }
 
-    @UserLoginToken
-    @GetMapping("/getMessage")
-    public String getMessage(){
-        return "你已通过验证";
-    }
 }

@@ -1,6 +1,7 @@
 package cn.propersoft.IoT.user.entity;
 
 import cn.propersoft.IoT.jpa.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ public class UserEntity extends BaseEntity {
 
     @Getter
     @Setter
-    @Column
+    @Column(unique = true)
     private String username;
     @Getter
     @Setter

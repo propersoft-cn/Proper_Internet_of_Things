@@ -24,6 +24,7 @@
             <artifactId>auth</artifactId>
             <version>${build.version}</version>
         </dependency>
+
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>demo</artifactId>
@@ -36,6 +37,11 @@
             <version>${build.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.propersoft.IoT</groupId>
+            <artifactId>swagger</artifactId>
+            <version>${build.version}</version>
+        </dependency>
     </dependencies>
 
 

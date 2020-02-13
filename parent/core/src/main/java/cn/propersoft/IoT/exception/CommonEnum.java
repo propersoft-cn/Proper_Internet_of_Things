@@ -10,8 +10,8 @@ public enum CommonEnum implements BaseErrorInfoInterface {
     INTERNAL_SERVER_ERROR("500", "服务器内部错误!"),
     BUSINESS_ERROR("500","业务异常"),
     SERVER_BUSY("503", "服务器正忙，请稍后再试!"),
-    USER_NOTFOUNT("500","登录失败,用户不存在"),
-    USER_PASSWORD_WRONG("500","登录失败,密码错误");
+    USER_NOTFOUNT("500","用户不存在"),
+    USER_PASSWORD_WRONG("500","密码错误");
 
     /**
      * 错误码
