@@ -27,11 +27,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepositroy userRepositroy;
 
-
-//    public UserServiceImpl(UserRepositroy userRepositroy) {
-//        this.userRepositroy = userRepositroy;
-//    }
-
     /**
      * 查询全部用户
      */
