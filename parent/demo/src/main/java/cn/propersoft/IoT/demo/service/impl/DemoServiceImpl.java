@@ -9,6 +9,8 @@ import cn.propersoft.IoT.demo.repository.DemoRepository;
 import cn.propersoft.IoT.demo.service.DemoService;
 import cn.propersoft.IoT.cache.service.RedisHelper;
 import cn.propersoft.IoT.demo.vo.DemoVO;
+import cn.propersoft.IoT.exception.BizException;
+import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.utils.MyBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DemoServiceImpl implements DemoService {
@@ -44,7 +47,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public List<DemoVO> findAll() {
         List<DemoEntity> demoEntityList = demoRepository.findAll();
-        return (List<DemoVO>) MyBeanUtils.convert(demoEntityList, DemoVO.class,"id","name");
+        return (List<DemoVO>) MyBeanUtils.convert(demoEntityList, DemoVO.class, "id", "name");
     }
 
     @Override
@@ -70,6 +73,16 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public String getRedisDemo(String key) {
         return Convert.toStr(redisHelper.getValue(key));
+    }
+
+    @Override
+    public DemoEntity findOneByOrderById() {
+        Optional<DemoEntity> demoEntity = demoRepository.findOneByOrderById();
+        if (demoEntity.isPresent()) {
+            DemoEntity entity = demoEntity.get();
+            return entity;
+        }
+        throw new BizException(CommonEnum.BUSINESS_ERROR);
     }
 
 

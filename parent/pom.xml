@@ -10,6 +10,8 @@
         <module>user</module>
         <module>auth</module>
         <module>swagger</module>
+        <module>websocket</module>
+        <module>apparatus</module>
     </modules>
 
     <properties>
@@ -32,6 +34,11 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

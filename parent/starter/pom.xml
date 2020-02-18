@@ -42,6 +42,18 @@
             <artifactId>swagger</artifactId>
             <version>${build.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.propersoft.IoT</groupId>
+            <artifactId>websocket</artifactId>
+            <version>${build.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.propersoft.IoT</groupId>
+            <artifactId>apparatus</artifactId>
+            <version>${build.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

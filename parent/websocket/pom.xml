@@ -9,30 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo</artifactId>
-    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
-            <artifactId>auth</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>cn.propersoft.IoT</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.propersoft.IoT</groupId>
-            <artifactId>websocket</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
     </dependencies>
 
-
+    <artifactId>websocket</artifactId>
     <build>
         <defaultGoal>compile</defaultGoal>
         <plugins>

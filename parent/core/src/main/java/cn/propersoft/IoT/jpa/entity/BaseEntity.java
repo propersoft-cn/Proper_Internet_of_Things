@@ -9,9 +9,10 @@ import java.util.UUID;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = -1692052275576005610L;
     @Id
     @Column(
-            length = 40
+            length = 64
     )
     private String id;
 

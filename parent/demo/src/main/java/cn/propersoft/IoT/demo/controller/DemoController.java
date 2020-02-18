@@ -1,18 +1,27 @@
 package cn.propersoft.IoT.demo.controller;
 
+import cn.propersoft.IoT.demo.entity.DemoEntity;
 import cn.propersoft.IoT.demo.service.DemoService;
 import cn.propersoft.IoT.auth.annotation.UserLoginToken;
 import cn.propersoft.IoT.demo.vo.DemoVO;
+import cn.propersoft.IoT.websocket.server.WebSocketServer;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Api(tags = "测试类")
 @RequestMapping("/demo")
 public class DemoController {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(DemoController.class);
 
     @Autowired
     private DemoService demoService;
@@ -54,5 +63,22 @@ public class DemoController {
         return demoService.getRedisDemo(key);
     }
 
+    @GetMapping("/push/{toUserId}")
+    public ResponseEntity<String> pushToWeb(String message, @PathVariable String toUserId) throws IOException {
+        Boolean isStop = true;
+        while (isStop) {
+            DemoEntity entity = demoService.findOneByOrderById();
+            WebSocketServer.sendInfo(entity.getName(), toUserId);
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            LOGGER.info("MSG SEND SUCCESS");
+        }
+
+//        WebSocketServer.sendInfo(message, toUserId);
+        return ResponseEntity.ok("MSG SEND SUCCESS");
+    }
 
 }

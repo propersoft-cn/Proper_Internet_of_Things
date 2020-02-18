@@ -1,8 +1,10 @@
 package cn.propersoft.IoT.demo.service;
 
+import cn.propersoft.IoT.demo.entity.DemoEntity;
 import cn.propersoft.IoT.demo.vo.DemoVO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DemoService {
 
@@ -15,4 +17,5 @@ public interface DemoService {
 
     String getRedisDemo(String key);
 
+    DemoEntity findOneByOrderById();
 }

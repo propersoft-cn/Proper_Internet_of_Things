@@ -1,10 +1,11 @@
 DONE 
 整合SpringDataJPA 整合Mysql数据库  整合Redis 整合认证授权JWT
-整合全局异常处理 整合自定义异常 
+整合全局异常处理 整合自定义异常 开发用户角色权限 整个Swagger
+整合websocket
 
 TODO 
  扩展JPA方法 封装flowable常用方法（集成流程编辑器）
-整合I18N国际化  开发用户角色权限 整个Swagger
+整合I18N国际化   
 整合日志配置 整合liquibase数据库管理
 
 * 持久层
