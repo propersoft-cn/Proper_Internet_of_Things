@@ -1,11 +1,11 @@
-package cn.propersoft.IoT.apparatus.yali.service.impl;
+package cn.propersoft.IoT.apparatus.yeweizhi.service.impl;
 
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.propersoft.IoT.apparatus.yali.entity.YaliEntity;
-import cn.propersoft.IoT.apparatus.yali.repository.YaliRepository;
-import cn.propersoft.IoT.apparatus.yali.service.YaliService;
+import cn.propersoft.IoT.apparatus.yeweizhi.entity.YeWeiZhiEntity;
+import cn.propersoft.IoT.apparatus.yeweizhi.repository.YeWeiZhiRepository;
+import cn.propersoft.IoT.apparatus.yeweizhi.service.YeWeiZhiService;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.websocket.server.WebSocketServer;
@@ -18,27 +18,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class YaliServiceImpl implements YaliService {
+public class YeWeiZhiServiceImpl implements YeWeiZhiService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(YaliServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(YeWeiZhiServiceImpl.class);
     @Autowired
-    private YaliRepository yaliRepository;
+    private YeWeiZhiRepository yeWeiZhiRepository;
 
     @Override
-    public void getYaLiData(String deviceId) {
+    public void getYeWeiZhiData(String deviceId) {
         boolean isStop = true;
         Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
         PageRequest pageRequest = PageRequest.of(1, 1, sort);
         Pageable pageable = pageRequest.first();
         while (isStop) {
-            Page<YaliEntity> page = yaliRepository.findAll(pageable);
+            Page<YeWeiZhiEntity> page = yeWeiZhiRepository.findAll(pageable);
             if (!page.isEmpty()) {
-                YaliEntity yaliEntity = page.toList().get(0);
+                YeWeiZhiEntity yaliEntity = page.toList().get(0);
                 JSONObject jsonObject = JSONUtil.parseObj(yaliEntity);
                 try {
                     //TODO 追加停止判断

@@ -10,5 +10,4 @@ import java.util.List;
 public interface YaliRepository extends JpaRepository<YaliEntity, String> {
 
 
-    List<YaliEntity> findOneByOrderByAddTimeDesc();
 }

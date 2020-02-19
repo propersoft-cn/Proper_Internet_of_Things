@@ -1,11 +1,10 @@
-package cn.propersoft.IoT.apparatus.yali.service.impl;
+package cn.propersoft.IoT.apparatus.co2.service.impl;
 
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.propersoft.IoT.apparatus.yali.entity.YaliEntity;
-import cn.propersoft.IoT.apparatus.yali.repository.YaliRepository;
-import cn.propersoft.IoT.apparatus.yali.service.YaliService;
+import cn.propersoft.IoT.apparatus.co2.entity.CO2Entity;
+import cn.propersoft.IoT.apparatus.co2.repository.CO2Repository;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.websocket.server.WebSocketServer;
@@ -18,31 +17,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class YaliServiceImpl implements YaliService {
+public class CO2ServiceImpl implements CO2Service {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(YaliServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CO2ServiceImpl.class);
     @Autowired
-    private YaliRepository yaliRepository;
+    private CO2Repository co2Repository;
 
     @Override
-    public void getYaLiData(String deviceId) {
+    public void getCo2Data(String deviceId) {
         boolean isStop = true;
         Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
         PageRequest pageRequest = PageRequest.of(1, 1, sort);
         Pageable pageable = pageRequest.first();
         while (isStop) {
-            Page<YaliEntity> page = yaliRepository.findAll(pageable);
+            Page<CO2Entity> page = co2Repository.findAll(pageable);
             if (!page.isEmpty()) {
-                YaliEntity yaliEntity = page.toList().get(0);
-                JSONObject jsonObject = JSONUtil.parseObj(yaliEntity);
+                CO2Entity co2Entity = page.toList().get(0);
+                JSONObject jsonObject = JSONUtil.parseObj(co2Entity);
                 try {
                     //TODO 追加停止判断
-                    //TODO
                     WebSocketServer.sendInfo(jsonObject.toString(), deviceId);
                     Thread.sleep(1000L);
                 } catch (Exception e) {
