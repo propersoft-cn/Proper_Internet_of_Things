@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class WebSocketServer {
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketServer.class);
     /**
      * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
