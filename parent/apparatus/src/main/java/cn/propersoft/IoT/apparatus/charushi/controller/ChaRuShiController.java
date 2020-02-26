@@ -17,10 +17,10 @@ public class ChaRuShiController {
     private ChaRuShiService chaRuShiService;
 
     @ResponseBody
-    @GetMapping("/getChaRuShiData/{deviceId}/device")
+    @GetMapping("/getChaRuShiData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getYaLiData(@PathVariable String deviceId) {
-        chaRuShiService.getChaRuShiData(deviceId);
+    public ResultBody getYaLiData(@PathVariable String userId) {
+        chaRuShiService.getChaRuShiData(userId);
         return ResultBody.success();
     }
 

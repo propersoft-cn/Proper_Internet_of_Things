@@ -16,10 +16,10 @@ public class ChaPaiController {
     private ChaPaiService chaPaiService;
 
     @ResponseBody
-    @GetMapping("/getChaPaiData/{deviceId}/device")
+    @GetMapping("/getChaPaiData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getYaLiData(@PathVariable String deviceId) {
-        chaPaiService.getChaPaiData(deviceId);
+    public ResultBody getYaLiData(@PathVariable String userId) {
+        chaPaiService.getChaPaiData(userId);
         return ResultBody.success();
     }
 }

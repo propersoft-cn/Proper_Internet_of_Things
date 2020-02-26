@@ -16,10 +16,10 @@ public class CO2Controller {
     private CO2Service co2Service;
 
     @ResponseBody
-    @GetMapping("/getCo2Data/{deviceId}/device")
+    @GetMapping("/getCo2Data/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getCo2Data(@PathVariable String deviceId) {
-        co2Service.getCo2Data(deviceId);
+    public ResultBody getCo2Data(@PathVariable String userId) {
+        co2Service.getCo2Data(userId);
         return ResultBody.success();
     }
 

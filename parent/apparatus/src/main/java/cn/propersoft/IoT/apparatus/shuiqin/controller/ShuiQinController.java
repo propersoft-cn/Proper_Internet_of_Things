@@ -16,10 +16,10 @@ public class ShuiQinController {
     private ShuiQinService shuiQinService;
 
     @ResponseBody
-    @GetMapping("/getShuiQinData/{deviceId}/device")
+    @GetMapping("/getShuiQinData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getShuiQinData(@PathVariable String deviceId) {
-        shuiQinService.getShuiQinData(deviceId);
+    public ResultBody getShuiQinData(@PathVariable String userId) {
+        shuiQinService.getShuiQinData(userId);
         return ResultBody.success();
     }
 

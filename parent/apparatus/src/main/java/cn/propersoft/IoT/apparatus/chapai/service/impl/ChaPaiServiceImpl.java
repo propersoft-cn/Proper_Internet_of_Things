@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,5 +49,27 @@ public class ChaPaiServiceImpl implements ChaPaiService {
             }
         }
 
+    }
+
+    /**
+     * 楼层能耗分析
+     *
+     * @param floor
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public ChaPaiEntity getFloorData(String floor, Date startTime, Date endTime) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<ChaPaiEntity> page = chaPaiRepository.getFloorData2(pageable);
+
+        if(page.toList().size() == 0) {
+            return new ChaPaiEntity();
+        }else {
+            return page.toList().get(0);
+        }
     }
 }

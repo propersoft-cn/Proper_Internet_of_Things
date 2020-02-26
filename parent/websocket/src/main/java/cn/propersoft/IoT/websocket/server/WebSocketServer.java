@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
+import cn.propersoft.IoT.websocket.config.WebSocketEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint("/websocket/{userId}")
+@ServerEndpoint(value = "/websocket/{userId}", encoders = {WebSocketEncoder.class})
 @Component
 public class WebSocketServer {
 
@@ -115,12 +116,20 @@ public class WebSocketServer {
         this.session.getBasicRemote().sendText(message);
     }
 
+    public void sendObject(Object o) throws IOException {
+        try {
+            this.session.getBasicRemote().sendObject(o);
+        } catch (EncodeException e) {
+            throw new BizException(CommonEnum.BUSINESS_ERROR, e);
+        }
+    }
+
 
     /**
      * 发送自定义消息
      */
     public static void sendInfo(String message, @PathParam("userId") String userId) throws IOException {
-        LOGGER.info("发送消息到:" + userId + "，报文:" + message);
+//        LOGGER.info("发送消息到:" + userId + "，报文:" + message);
         if (StrUtil.isNotBlank(userId) && webSocketMap.containsKey(userId)) {
             webSocketMap.get(userId).sendMessage(message);
         } else {
@@ -128,6 +137,16 @@ public class WebSocketServer {
             throw new BizException(CommonEnum.USER_NOTFOUNT);
         }
     }
+
+//    public static void sendObject(String message, @PathParam("userId") String userId) throws IOException {
+//        LOGGER.info("发送消息到:" + userId + "，报文:" + message);
+//        if (StrUtil.isNotBlank(userId) && webSocketMap.containsKey(userId)) {
+//            webSocketMap.get(userId).sendMessage(message);
+//        } else {
+//            LOGGER.error("用户" + userId + ",不在线！");
+//            throw new BizException(CommonEnum.USER_NOTFOUNT);
+//        }
+//    }
 
     public static synchronized int getOnlineCount() {
         return onlineCount;

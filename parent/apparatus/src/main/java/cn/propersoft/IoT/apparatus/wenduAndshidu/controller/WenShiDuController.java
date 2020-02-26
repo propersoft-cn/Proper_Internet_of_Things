@@ -16,10 +16,10 @@ public class WenShiDuController {
     private WenShiDuService wenShiDuService;
 
     @ResponseBody
-    @GetMapping("/getWenShiDuData/{deviceId}/device")
+    @GetMapping("/getWenShiDuData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getWenShiDuData(@PathVariable String deviceId) {
-        wenShiDuService.getWenShiDuData(deviceId);
+    public ResultBody getWenShiDuData(@PathVariable String userId) {
+        wenShiDuService.getWenShiDuData(userId);
         return ResultBody.success();
     }
 

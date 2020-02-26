@@ -16,10 +16,10 @@ public class YeWeiZhiController {
     private YeWeiZhiService yeWeiZhiService;
 
     @ResponseBody
-    @GetMapping("/getYeWeiZhiData/{deviceId}/device")
+    @GetMapping("/getYeWeiZhiData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getYeWeiZhiData(@PathVariable String deviceId) {
-        yeWeiZhiService.getYeWeiZhiData(deviceId);
+    public ResultBody getYeWeiZhiData(@PathVariable String userId) {
+        yeWeiZhiService.getYeWeiZhiData(userId);
         return ResultBody.success();
     }
 

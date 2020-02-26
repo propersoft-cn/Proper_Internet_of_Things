@@ -16,10 +16,10 @@ public class YaLiController {
     private YaliService yaliService;
 
     @ResponseBody
-    @GetMapping("/getYaLiData/{deviceId}/device")
+    @GetMapping("/getYaLiData/{userId}/device")
     @ApiOperation(value = "获取设备数据")
-    public ResultBody getYaLiData(@PathVariable String deviceId) {
-        yaliService.getYaLiData(deviceId);
+    public ResultBody getYaLiData(@PathVariable String userId) {
+        yaliService.getYaLiData(userId);
         return ResultBody.success();
     }
 
