@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(tags = "二氧化碳仪表数据接口")
+@Api(tags = "二氧化碳仪表数据接口(webSocket接口需要先建立连接)")
 @RequestMapping("/co2")
 public class CO2Controller {
 

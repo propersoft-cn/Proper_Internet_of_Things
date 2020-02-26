@@ -1,5 +1,6 @@
 package cn.propersoft.IoT.apparatus.chapai.repository;
 
+import cn.propersoft.IoT.apparatus.analysis.vo.StatisticalAnalysisVO;
 import cn.propersoft.IoT.apparatus.chapai.entity.ChaPaiEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,14 +11,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ChaPaiRepository extends JpaRepository<ChaPaiEntity, String> {
-
     @Query(value = " SELECT C FROM ChaPaiEntity C WHERE C.addTime >= :startTime AND C.addTime <= :endTime ")
     Page<ChaPaiEntity> getFloorData(@Param(value = "startTime") Date startTime, @Param(value = "endTime") Date endTime, Pageable pageable);
 
-
     @Query(value = " SELECT C FROM ChaPaiEntity C  ")
     Page<ChaPaiEntity> getFloorData2(Pageable pageable);
+
+    @Query(value = "  SELECT DATE_FORMAT( add_time, '%Y-%m' ) date,sum( dianliang ) value FROM chapai WHERE add_time >= :formatStartTime and add_time <= :formatEndTime GROUP BY DATE_FORMAT( add_time, '%Y-%m' )", nativeQuery = true)
+    List<Map> getChaPaiHistogramData(@Param(value = "formatStartTime") String formatStartTime, @Param(value = "formatEndTime") String formatEndTime);
 }

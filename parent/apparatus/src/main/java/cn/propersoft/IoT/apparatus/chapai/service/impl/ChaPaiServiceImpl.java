@@ -1,7 +1,10 @@
 package cn.propersoft.IoT.apparatus.chapai.service.impl;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.propersoft.IoT.apparatus.analysis.vo.StatisticalAnalysisVO;
 import cn.propersoft.IoT.apparatus.chapai.entity.ChaPaiEntity;
 import cn.propersoft.IoT.apparatus.chapai.repository.ChaPaiRepository;
 import cn.propersoft.IoT.apparatus.chapai.service.ChaPaiService;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ChaPaiServiceImpl implements ChaPaiService {
@@ -66,10 +70,27 @@ public class ChaPaiServiceImpl implements ChaPaiService {
         Pageable pageable = pageRequest.first();
         Page<ChaPaiEntity> page = chaPaiRepository.getFloorData2(pageable);
 
-        if(page.toList().size() == 0) {
+        if (page.toList().size() == 0) {
             return new ChaPaiEntity();
-        }else {
+        } else {
             return page.toList().get(0);
         }
+    }
+
+    /**
+     * 获取各楼层能耗分析柱状图数据
+     *
+     * @param floor
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public List<StatisticalAnalysisVO> getChaPaiHistogramData(String floor, String startTime, String endTime) {
+        String formatStartTime = DateUtil.format(new Date(Convert.toLong(startTime)), "yyyy-MM-dd HH:mm:ss");
+        String formatEndTime = DateUtil.format(new Date(Convert.toLong(endTime)), "yyyy-MM-dd HH:mm:ss");
+        List<Map> chaPaiHistogramData = chaPaiRepository.getChaPaiHistogramData(formatStartTime, formatEndTime);
+        List<StatisticalAnalysisVO> list = Convert.convert(List.class, chaPaiHistogramData);
+        return list;
     }
 }

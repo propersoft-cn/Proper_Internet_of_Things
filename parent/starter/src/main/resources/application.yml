@@ -9,6 +9,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
   #Redis 配置
   ##默认密码为空
   redis:
@@ -46,6 +47,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
   #Redis 配置
   ##默认密码为空
   redis:

@@ -1,9 +1,10 @@
-package cn.propersoft.IoT.apparatus.analysis;
+package cn.propersoft.IoT.apparatus.analysis.controller;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.propersoft.IoT.apparatus.analysis.vo.StatisticalAnalysisVO;
 import cn.propersoft.IoT.apparatus.chapai.entity.ChaPaiEntity;
 import cn.propersoft.IoT.apparatus.chapai.service.ChaPaiService;
 import cn.propersoft.IoT.response.ResultBody;
@@ -44,6 +45,8 @@ public class StatisticalAnalysisController {
             map.put(format, RandomUtil.randomInt(100, 150));
             result.add(map);
         }
+        //TODO 真实逻辑
+        //List<StatisticalAnalysisVO> result = chaPaiService.getChaPaiHistogramData(floor, startTime, endTime);
         return ResultBody.success(result);
     }
 
