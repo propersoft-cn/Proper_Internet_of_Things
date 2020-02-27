@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(tags = "液位值仪表数据接口(webSocket接口需要先建立连接)")
+@Api(tags = "液位值仪表数据接口")
 @RequestMapping("/yeweizhi")
 public class YeWeiZhiController {
 
@@ -17,7 +17,7 @@ public class YeWeiZhiController {
 
     @ResponseBody
     @GetMapping("/getYeWeiZhiData/{userId}/device")
-    @ApiOperation(value = "获取设备数据")
+    @ApiOperation(value = "获取设备数据(webSocket接口需要先建立连接)")
     public ResultBody getYeWeiZhiData(@PathVariable String userId) {
         yeWeiZhiService.getYeWeiZhiData(userId);
         return ResultBody.success();

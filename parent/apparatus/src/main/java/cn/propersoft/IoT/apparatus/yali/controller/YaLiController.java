@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(tags = "压力仪表数据接口(webSocket接口需要先建立连接)")
+@Api(tags = "压力仪表数据接口")
 @RequestMapping("/yali")
 public class YaLiController {
 
@@ -17,7 +17,7 @@ public class YaLiController {
 
     @ResponseBody
     @GetMapping("/getYaLiData/{userId}/device")
-    @ApiOperation(value = "获取设备数据")
+    @ApiOperation(value = "获取设备数据(webSocket接口需要先建立连接)")
     public ResultBody getYaLiData(@PathVariable String userId) {
         yaliService.getYaLiData(userId);
         return ResultBody.success();

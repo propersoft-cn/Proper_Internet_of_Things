@@ -304,34 +304,6 @@ public class MyBeanUtils {
         return targets;
     }
 
-    /**
-     * DataTrunk类型转换
-     *
-     * @param page             源对象集合
-     * @param targetCls        目标对象类型
-     * @param ignoreProperties 忽略属性
-     * @param <T>              目标对象泛型
-     * @return 目标对象实例集合
-     */
-//    public static <T> DataTrunk<T> convert(Page page, Class<T> targetCls, String... ignoreProperties) {
-//        if (null == page) {
-//            return null;
-//        }
-//        DataTrunk<T> dataTrunk = new DataTrunk<>();
-//        dataTrunk.setCount(page.getTotalElements());
-//        dataTrunk.setData(convert(page.getContent(), targetCls, ignoreProperties));
-//        return dataTrunk;
-//    }
-
-//    public static <T> DataTrunk<T> convert(DataTrunk page, Class<T> targetCls, String... ignoreProperties) {
-//        if (null == page) {
-//            return null;
-//        }
-//        DataTrunk<T> dataTrunk = new DataTrunk<>();
-//        dataTrunk.setCount(page.getCount());
-//        dataTrunk.setData(convert(page.getData(), targetCls, ignoreProperties));
-//        return dataTrunk;
-//    }
 
     /**
      * 类型转换

@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(tags = "测试类")
+@Api(tags = "无用测试接口")
 @RequestMapping("/demo")
 public class DemoController {
 

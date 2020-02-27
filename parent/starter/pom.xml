@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>starter</artifactId>
-    <name>IoT</name>
 
     <dependencies>
         <dependency>

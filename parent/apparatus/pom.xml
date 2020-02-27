@@ -15,19 +15,19 @@
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>auth</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>websocket</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
     </dependencies>
 

@@ -15,13 +15,13 @@
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>user</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${build.version}</version>
         </dependency>
     </dependencies>
 

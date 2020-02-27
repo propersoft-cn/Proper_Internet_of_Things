@@ -17,7 +17,6 @@
     <properties>
         <java.version>1.8</java.version>
         <build.version>0.0.1-SNAPSHOT</build.version>
-<!--        <start-class>com.xx.webapps.api.main.WebappsApiBidMain</start-class>-->
     </properties>
 
     <parent>
