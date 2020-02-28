@@ -1,4 +1,4 @@
-package cn.propersoft.IoT.utils;
+package cn.propersoft.IoT.core.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;

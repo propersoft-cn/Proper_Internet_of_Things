@@ -4,6 +4,7 @@ import cn.propersoft.IoT.demo.entity.DemoEntity;
 import cn.propersoft.IoT.demo.service.DemoService;
 import cn.propersoft.IoT.auth.annotation.UserLoginToken;
 import cn.propersoft.IoT.demo.vo.DemoVO;
+import cn.propersoft.IoT.response.ResultBody;
 import cn.propersoft.IoT.websocket.server.WebSocketServer;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -11,18 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Api(tags = "无用测试接口")
 @RequestMapping("/demo")
 public class DemoController {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(DemoController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DemoController.class);
 
     @Autowired
     private DemoService demoService;
@@ -31,22 +29,23 @@ public class DemoController {
     @UserLoginToken
     @ApiOperation(value = "Hello SpringBoot")
     @GetMapping("/demo1")
-    public String demo1() {
-        return "hello springBoot";
+    public ResultBody demo1() {
+        return ResultBody.success("hello springBoot");
     }
 
     @ResponseBody
     @ApiOperation(value = "查询所有Demo数据")
     @GetMapping("/findAll")
-    public List<DemoVO> findAll() {
-        return demoService.findAll();
+    public ResultBody findAll() {
+        return ResultBody.success(demoService.findAll());
     }
 
     @ResponseBody
     @PostMapping("/add")
     @ApiOperation(value = "新增DemoVo")
-    public void add(DemoVO demoVO) {
+    public ResultBody add(DemoVO demoVO) {
         demoService.add(demoVO);
+        return ResultBody.success();
     }
 
     @ResponseBody

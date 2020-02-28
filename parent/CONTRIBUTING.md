@@ -1,7 +1,8 @@
+## **常于同好争高下，不与傻子论长短** 
 DONE 
 整合SpringDataJPA 整合Mysql数据库  整合Redis 整合认证授权JWT
 整合全局异常处理 整合自定义异常 开发用户角色权限 整个Swagger
-整合websocket 整合日志配置
+整合websocket 整合日志配置 整合单元测试junit（存在事务问题）
 
 TODO 
 扩展JPA方法 封装flowable常用方法 集成流程编辑器
@@ -12,7 +13,6 @@ TODO
 > 默认的事务传播机制为每个持久对象一个事务即一个业务层增删改两个持久对象 第一个成功第二个失败时，第一个持久层数据会提交。
 >> 如果期望一起成功一起回滚须在方法上添加@Transactional(rollbackOn = Exception.class) 可捕捉特定异常
 
--------------------------------------------------
 * Convert.convert(List.class, demoEntityList); 无法进行entity与VO之间转化 
 > 解决方案调用 MyBeanUtils.convert
 
@@ -28,3 +28,8 @@ TODO
 
 * 增加过滤器链修复前后端分离请求的跨域问题
 > 具体实现其实是通过过滤器在response中追加header. 在类CorsFilter中
+
+* 整合单元测试junit 所有模块必须添加单元测试，否则不可merge代码。
+>没有单元测试的代码不是一个好代码，望各位对自己写的代码负责，怀着敬畏之心
+>如何增加自己的单元测试： 参考demo模块的例子
+>>TODO 单元测试的数据会真实的插入自己的数据库，但是期望这是可控制的，通过事务。暂时没解决

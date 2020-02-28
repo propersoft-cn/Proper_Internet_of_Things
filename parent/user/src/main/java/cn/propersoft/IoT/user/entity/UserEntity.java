@@ -1,32 +1,26 @@
 package cn.propersoft.IoT.user.entity;
 
 import cn.propersoft.IoT.jpa.entity.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "zl_user")
+@Data
+@Table(name = "iot_user")
 public class UserEntity extends BaseEntity {
 
-    @Getter
-    @Setter
+    private static final long serialVersionUID = -6240146766010214651L;
     @Column(unique = true)
     private String username;
-    @Getter
-    @Setter
     @Column
     private String password;
-    @Getter
-    @Setter
     @Column
     private String name;
-    @Getter
-    @Setter
     @Column
     private String role;
 

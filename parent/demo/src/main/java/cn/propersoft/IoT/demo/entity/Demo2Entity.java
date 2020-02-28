@@ -8,10 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Table(name = "zl_demo2")
+@Table(name = "iot_demo2")
 @Entity
 public class Demo2Entity extends BaseEntity {
 
+    private static final long serialVersionUID = 2847953022398061321L;
     @Getter
     @Setter
     @Column

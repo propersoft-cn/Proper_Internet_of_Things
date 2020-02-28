@@ -26,6 +26,30 @@ public class ResultBody {
         this.message = errorInfo.getResultMsg();
     }
 
+    public Integer getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(Integer totalSize) {
+        this.totalSize = totalSize;
+    }
+
     public String getCode() {
         return code;
     }

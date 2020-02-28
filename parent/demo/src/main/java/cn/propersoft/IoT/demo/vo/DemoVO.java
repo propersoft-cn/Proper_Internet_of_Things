@@ -15,7 +15,5 @@ public class DemoVO {
     private String name;
     @ApiModelProperty(value = "Demo名称2")
     private String name2;
-    @ApiModelProperty(value = "Demo名称3")
-    private String name3;
 
 }

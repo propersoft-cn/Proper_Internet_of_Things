@@ -11,7 +11,7 @@ import cn.propersoft.IoT.cache.service.RedisHelper;
 import cn.propersoft.IoT.demo.vo.DemoVO;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
-import cn.propersoft.IoT.utils.MyBeanUtils;
+import cn.propersoft.IoT.core.utils.MyBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package cn.propersoft.IoT.config;
+package cn.propersoft.IoT.swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

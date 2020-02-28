@@ -10,7 +10,7 @@ import cn.propersoft.IoT.user.entity.UserEntity;
 import cn.propersoft.IoT.user.repositroy.UserRepositroy;
 import cn.propersoft.IoT.user.service.UserService;
 import cn.propersoft.IoT.user.vo.UserVO;
-import cn.propersoft.IoT.utils.MyBeanUtils;
+import cn.propersoft.IoT.core.utils.MyBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public UserVO createUser(UserVO userVO) {
         Optional<UserEntity> one = userRepositroy.findByUsername(userVO.getUsername());
         if (one.isPresent()) {
-            throw new BizException(CommonEnum.BUSINESS_ERROR);
+            throw new BizException(CommonEnum.USER_ALREADY_EXISTS);
         } else {
             UserEntity userEntity = new UserEntity();
             BeanUtil.copyProperties(userVO, userEntity);

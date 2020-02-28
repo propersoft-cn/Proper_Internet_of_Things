@@ -19,7 +19,7 @@ public class AuthController {
 
     @ResponseBody
     @ApiOperation(value = "获取token")
-    @PostMapping("/login")
+    @PostMapping("/getToken")
     public ResultBody login(@ApiParam UserVO userVO) {
         UserVO login = authService.login(userVO);
         return ResultBody.success(login.getToken());
