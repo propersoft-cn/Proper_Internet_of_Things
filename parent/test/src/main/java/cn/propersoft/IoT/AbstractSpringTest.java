@@ -20,33 +20,4 @@ import static java.lang.Thread.sleep;
 @SpringBootTest(classes = TestStarter.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public abstract class AbstractSpringTest {
 
-//    @Autowired
-//    protected MockHttpServletRequest mockRequest;
-
-//    @Autowired
-//    protected WebApplicationContext wac;
-
-//    @Autowired
-//    @Qualifier("taskExecutor")
-//    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-
-//    protected MockMvc mockMvc;
-
-//    @Before
-//    public void setup() {
-//        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-//    }
-
-//    protected void waitExecutorDone() throws InterruptedException {
-//        BlockingQueue<Runnable> queue = threadPoolTaskExecutor.getThreadPoolExecutor().getQueue();
-//        while (queue != null && !queue.isEmpty()) {
-//            System.out.println("sleep 5 milliseconds to wait, current blocking queue is ${queue.size()}");
-//            sleep(5);
-//        }
-//        while (threadPoolTaskExecutor.getActiveCount() > 0) {
-//            System.out.println("sleep 5 milliseconds to wait, current active count is ${threadPoolTaskExecutor.activeCount}");
-//            sleep(5);
-//        }
-//    }
-
 }
