@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ChaPaiService {
 
+    ChaPaiEntity findOneByOrderByAddTimeDesc();
+
     void getChaPaiData(String deviceId);
 
     /**

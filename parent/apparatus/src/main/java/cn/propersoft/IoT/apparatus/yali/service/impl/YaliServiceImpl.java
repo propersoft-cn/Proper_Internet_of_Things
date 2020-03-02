@@ -3,6 +3,7 @@ package cn.propersoft.IoT.apparatus.yali.service.impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.propersoft.IoT.apparatus.wenduAndshidu.entity.WenShiDuEntity;
 import cn.propersoft.IoT.apparatus.yali.entity.YaliEntity;
 import cn.propersoft.IoT.apparatus.yali.repository.YaliRepository;
 import cn.propersoft.IoT.apparatus.yali.service.YaliService;
@@ -49,6 +50,20 @@ public class YaliServiceImpl implements YaliService {
                     throw new BizException(CommonEnum.BUSINESS_ERROR, e);
                 }
             }
+        }
+    }
+
+    @Override
+    public YaliEntity findOneByOrderByAddTimeDesc() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<YaliEntity> page = yaliRepository.findAll(pageable);
+        if (!page.isEmpty()) {
+            List<YaliEntity> list = page.toList();
+            return list.get(0);
+        } else {
+            throw new BizException(CommonEnum.BUSINESS_ERROR);
         }
     }
 }

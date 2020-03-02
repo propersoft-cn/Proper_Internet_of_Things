@@ -32,6 +32,20 @@ public class ChaPaiServiceImpl implements ChaPaiService {
     private ChaPaiRepository chaPaiRepository;
 
     @Override
+    public ChaPaiEntity findOneByOrderByAddTimeDesc() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<ChaPaiEntity> page = chaPaiRepository.findAll(pageable);
+        if (!page.isEmpty()) {
+            List<ChaPaiEntity> list = page.toList();
+            return list.get(0);
+        } else {
+            throw new BizException(CommonEnum.BUSINESS_ERROR);
+        }
+    }
+
+    @Override
     public void getChaPaiData(String deviceId) {
         boolean isStop = true;
         Sort sort = Sort.by(Sort.Direction.DESC, "addTime");

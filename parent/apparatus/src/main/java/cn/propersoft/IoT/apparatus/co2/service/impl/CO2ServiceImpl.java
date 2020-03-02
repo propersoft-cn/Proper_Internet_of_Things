@@ -3,8 +3,10 @@ package cn.propersoft.IoT.apparatus.co2.service.impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.propersoft.IoT.apparatus.chapai.entity.ChaPaiEntity;
 import cn.propersoft.IoT.apparatus.co2.entity.CO2Entity;
 import cn.propersoft.IoT.apparatus.co2.repository.CO2Repository;
+import cn.propersoft.IoT.apparatus.co2.service.CO2Service;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.websocket.server.WebSocketServer;
@@ -16,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CO2ServiceImpl implements CO2Service {
@@ -43,6 +47,20 @@ public class CO2ServiceImpl implements CO2Service {
                     throw new BizException(CommonEnum.BUSINESS_ERROR, e);
                 }
             }
+        }
+    }
+
+    @Override
+    public CO2Entity findOneByOrderByAddTimeDesc() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<CO2Entity> page = co2Repository.findAll(pageable);
+        if (!page.isEmpty()) {
+            List<CO2Entity> list = page.toList();
+            return list.get(0);
+        } else {
+            throw new BizException(CommonEnum.BUSINESS_ERROR);
         }
     }
 }

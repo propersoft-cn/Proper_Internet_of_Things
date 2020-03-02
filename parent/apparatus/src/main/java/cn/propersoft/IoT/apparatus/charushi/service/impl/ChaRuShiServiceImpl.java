@@ -3,6 +3,7 @@ package cn.propersoft.IoT.apparatus.charushi.service.impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.propersoft.IoT.apparatus.chapai.entity.ChaPaiEntity;
 import cn.propersoft.IoT.apparatus.charushi.entity.ChaRuShiEntity;
 import cn.propersoft.IoT.apparatus.charushi.repository.ChaRuShiRepository;
 import cn.propersoft.IoT.apparatus.charushi.service.ChaRuShiService;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChaRuShiServiceImpl implements ChaRuShiService {
@@ -44,6 +47,21 @@ public class ChaRuShiServiceImpl implements ChaRuShiService {
                     throw new BizException(CommonEnum.BUSINESS_ERROR, e);
                 }
             }
+        }
+    }
+
+    @Override
+    public ChaRuShiEntity findOneByOrderByAddTimeDesc() {
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<ChaRuShiEntity> page = chaRuShiRepository.findAll(pageable);
+        if (!page.isEmpty()) {
+            List<ChaRuShiEntity> list = page.toList();
+            return list.get(0);
+        } else {
+            throw new BizException(CommonEnum.BUSINESS_ERROR);
         }
     }
 }

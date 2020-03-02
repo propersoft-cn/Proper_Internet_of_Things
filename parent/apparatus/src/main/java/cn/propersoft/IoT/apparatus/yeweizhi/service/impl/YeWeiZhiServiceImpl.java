@@ -3,6 +3,7 @@ package cn.propersoft.IoT.apparatus.yeweizhi.service.impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.propersoft.IoT.apparatus.yali.entity.YaliEntity;
 import cn.propersoft.IoT.apparatus.yeweizhi.entity.YeWeiZhiEntity;
 import cn.propersoft.IoT.apparatus.yeweizhi.repository.YeWeiZhiRepository;
 import cn.propersoft.IoT.apparatus.yeweizhi.service.YeWeiZhiService;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class YeWeiZhiServiceImpl implements YeWeiZhiService {
@@ -45,6 +48,20 @@ public class YeWeiZhiServiceImpl implements YeWeiZhiService {
                     throw new BizException(CommonEnum.BUSINESS_ERROR, e);
                 }
             }
+        }
+    }
+
+    @Override
+    public YeWeiZhiEntity findOneByOrderByAddTimeDesc() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "addTime");
+        PageRequest pageRequest = PageRequest.of(1, 1, sort);
+        Pageable pageable = pageRequest.first();
+        Page<YeWeiZhiEntity> page = yeWeiZhiRepository.findAll(pageable);
+        if (!page.isEmpty()) {
+            List<YeWeiZhiEntity> list = page.toList();
+            return list.get(0);
+        } else {
+            throw new BizException(CommonEnum.BUSINESS_ERROR);
         }
     }
 }

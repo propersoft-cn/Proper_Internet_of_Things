@@ -128,10 +128,14 @@ public class WebSocketServer {
     /**
      * 发送自定义消息
      */
-    public static void sendInfo(String message, @PathParam("userId") String userId) throws IOException {
+    public static void sendInfo(String message, @PathParam("userId") String userId) {
         LOGGER.info("发送消息到:" + userId + "，报文:" + message);
         if (StrUtil.isNotBlank(userId) && webSocketMap.containsKey(userId)) {
-            webSocketMap.get(userId).sendMessage(message);
+            try {
+                webSocketMap.get(userId).sendMessage(message);
+            } catch (IOException e) {
+                throw new BizException(CommonEnum.BUSINESS_ERROR, e);
+            }
         } else {
             LOGGER.error("用户" + userId + ",不在线！");
             throw new BizException(CommonEnum.USER_NOTFOUNT);

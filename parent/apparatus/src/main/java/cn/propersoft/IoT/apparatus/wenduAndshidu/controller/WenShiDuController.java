@@ -1,6 +1,6 @@
 package cn.propersoft.IoT.apparatus.wenduAndshidu.controller;
 
-import cn.propersoft.IoT.apparatus.wenduAndshidu.service.impl.WenShiDuService;
+import cn.propersoft.IoT.apparatus.wenduAndshidu.service.WenShiDuService;
 import cn.propersoft.IoT.response.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
