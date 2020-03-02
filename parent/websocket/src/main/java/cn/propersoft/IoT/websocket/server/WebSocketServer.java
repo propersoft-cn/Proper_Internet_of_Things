@@ -129,7 +129,7 @@ public class WebSocketServer {
      * 发送自定义消息
      */
     public static void sendInfo(String message, @PathParam("userId") String userId) throws IOException {
-//        LOGGER.info("发送消息到:" + userId + "，报文:" + message);
+        LOGGER.info("发送消息到:" + userId + "，报文:" + message);
         if (StrUtil.isNotBlank(userId) && webSocketMap.containsKey(userId)) {
             webSocketMap.get(userId).sendMessage(message);
         } else {
