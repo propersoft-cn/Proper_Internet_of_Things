@@ -1,4 +1,4 @@
-package cn.propersoft.IoT.user.vo;
+package cn.propersoft.IoT.auth.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

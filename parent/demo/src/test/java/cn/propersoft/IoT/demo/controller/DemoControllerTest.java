@@ -12,7 +12,7 @@ import cn.hutool.json.JSONUtil;
 import cn.propersoft.IoT.demo.vo.DemoVO;
 import cn.propersoft.IoT.AbstractSpringTest;
 import cn.propersoft.IoT.test.utils.AddressUtils;
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.vo.UserVO;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

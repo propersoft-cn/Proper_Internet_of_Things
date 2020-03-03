@@ -10,6 +10,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database: mysql
   #Redis 配置
   ##默认密码为空
   redis:
@@ -48,6 +49,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database: mysql
   #Redis 配置
   ##默认密码为空
   redis:

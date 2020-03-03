@@ -13,12 +13,6 @@
     <dependencies>
         <dependency>
             <groupId>cn.propersoft.IoT</groupId>
-            <artifactId>user</artifactId>
-            <version>${build.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.propersoft.IoT</groupId>
             <artifactId>auth</artifactId>
             <version>${build.version}</version>
         </dependency>

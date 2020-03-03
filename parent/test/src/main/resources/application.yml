@@ -3,13 +3,15 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/IoT?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&nullCatalogMeansCurrent=true
-    username: root
-    password: 123456
+#    url: jdbc:mysql://127.0.0.1:3306/IoT?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    url: jdbc:h2:~/data/h2/iot_test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database: h2
   #Redis 配置
   ##默认密码为空
   redis:

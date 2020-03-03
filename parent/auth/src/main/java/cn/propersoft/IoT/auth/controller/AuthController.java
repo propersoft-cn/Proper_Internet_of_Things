@@ -2,7 +2,7 @@ package cn.propersoft.IoT.auth.controller;
 
 import cn.propersoft.IoT.auth.service.AuthService;
 import cn.propersoft.IoT.response.ResultBody;
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

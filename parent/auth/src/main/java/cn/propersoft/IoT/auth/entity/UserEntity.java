@@ -1,4 +1,4 @@
-package cn.propersoft.IoT.user.entity;
+package cn.propersoft.IoT.auth.entity;
 
 import cn.propersoft.IoT.jpa.entity.BaseEntity;
 import lombok.Data;

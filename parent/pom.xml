@@ -7,7 +7,6 @@
         <module>demo</module>
         <module>starter</module>
         <module>core</module>
-        <module>user</module>
         <module>auth</module>
         <module>swagger</module>
         <module>websocket</module>

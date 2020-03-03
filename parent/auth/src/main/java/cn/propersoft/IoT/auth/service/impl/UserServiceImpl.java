@@ -1,15 +1,15 @@
-package cn.propersoft.IoT.user.service.impl;
+package cn.propersoft.IoT.auth.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
+import cn.propersoft.IoT.auth.entity.UserEntity;
+import cn.propersoft.IoT.auth.repository.UserRepositroy;
+import cn.propersoft.IoT.auth.service.UserService;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
-import cn.propersoft.IoT.user.entity.UserEntity;
-import cn.propersoft.IoT.user.repositroy.UserRepositroy;
-import cn.propersoft.IoT.user.service.UserService;
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.vo.UserVO;
 import cn.propersoft.IoT.core.utils.MyBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

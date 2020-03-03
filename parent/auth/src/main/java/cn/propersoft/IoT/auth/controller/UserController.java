@@ -1,8 +1,9 @@
-package cn.propersoft.IoT.user.controller;
+package cn.propersoft.IoT.auth.controller;
 
+import cn.propersoft.IoT.auth.annotation.UserLoginToken;
 import cn.propersoft.IoT.response.ResultBody;
-import cn.propersoft.IoT.user.service.UserService;
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.service.UserService;
+import cn.propersoft.IoT.auth.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,6 +21,7 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
+    @UserLoginToken
     @GetMapping("/all")
     @ApiOperation(value = "查询所有用户")
     public ResultBody findAll() {
@@ -37,6 +39,7 @@ public class UserController {
 
 
     @ResponseBody
+    @UserLoginToken
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除用户")
     public ResultBody delete(@ApiParam(value = "用户id集合（逗号分隔）") @RequestParam String ids) {
@@ -44,6 +47,7 @@ public class UserController {
     }
 
     @ResponseBody
+    @UserLoginToken
     @PutMapping("/update")
     @ApiOperation(value = "修改密码")
     public ResultBody update(@ApiParam(value = "用户id") @RequestParam String id,

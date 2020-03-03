@@ -7,9 +7,9 @@ import cn.propersoft.IoT.auth.service.AuthService;
 import cn.propersoft.IoT.auth.service.TokenService;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
-import cn.propersoft.IoT.user.entity.UserEntity;
-import cn.propersoft.IoT.user.service.UserService;
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.entity.UserEntity;
+import cn.propersoft.IoT.auth.service.UserService;
+import cn.propersoft.IoT.auth.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

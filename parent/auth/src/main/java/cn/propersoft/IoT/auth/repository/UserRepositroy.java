@@ -1,6 +1,6 @@
-package cn.propersoft.IoT.user.repositroy;
+package cn.propersoft.IoT.auth.repository;
 
-import cn.propersoft.IoT.user.entity.UserEntity;
+import cn.propersoft.IoT.auth.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

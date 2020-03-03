@@ -1,7 +1,7 @@
 package cn.propersoft.IoT.auth.service;
 
 
-import cn.propersoft.IoT.user.vo.UserVO;
+import cn.propersoft.IoT.auth.vo.UserVO;
 
 public interface AuthService {
 

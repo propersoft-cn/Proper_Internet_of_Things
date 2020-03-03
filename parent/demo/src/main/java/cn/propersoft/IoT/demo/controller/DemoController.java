@@ -34,6 +34,7 @@ public class DemoController {
     }
 
     @ResponseBody
+    @UserLoginToken
     @ApiOperation(value = "查询所有Demo数据")
     @GetMapping("/findAll")
     public ResultBody findAll() {
@@ -41,6 +42,7 @@ public class DemoController {
     }
 
     @ResponseBody
+    @UserLoginToken
     @PostMapping("/add")
     @ApiOperation(value = "新增DemoVo")
     public ResultBody add(DemoVO demoVO) {
@@ -49,6 +51,7 @@ public class DemoController {
     }
 
     @ResponseBody
+    @UserLoginToken
     @PostMapping("/addRedisDemo")
     @ApiOperation(value = "新增Redis数据 ")
     public void addRedisDemo(@ApiParam(value = "Redis的key", required = true) @RequestParam String key,
@@ -57,6 +60,7 @@ public class DemoController {
     }
 
     @ResponseBody
+    @UserLoginToken
     @GetMapping("/addRedisDemo")
     @ApiOperation(value = "根据key获取Redis的值 ")
     public String getRedisDemo(@ApiParam(value = "Redis的value", required = true) @RequestParam String key) {
