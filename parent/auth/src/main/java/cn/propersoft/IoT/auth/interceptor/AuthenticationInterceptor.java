@@ -1,5 +1,7 @@
 package cn.propersoft.IoT.auth.interceptor;
 
+import cn.propersoft.IoT.auth.entity.TokenEntity;
+import cn.propersoft.IoT.auth.service.TokenService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,7 +24,10 @@ import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
@@ -61,12 +66,20 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new BizException(CommonEnum.USER_NOTFOUNT);
                 }
                 // 验证 token
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-                try {
-                    jwtVerifier.verify(token);
-                } catch (JWTVerificationException e) {
+                TokenEntity tokenEntity = tokenService.findByUserId(user.getId());
+                if (null == tokenEntity) {
                     throw new BizException(CommonEnum.SIGNATURE_NOT_MATCH);
+                } else {
+                    if (!tokenEntity.getToken().equals(token)) {
+                        throw new BizException(CommonEnum.SIGNATURE_INVALID);
+                    }
                 }
+//                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+//                try {
+//                    jwtVerifier.verify(token);
+//                } catch (JWTVerificationException e) {
+//                    throw new BizException(CommonEnum.SIGNATURE_NOT_MATCH);
+//                }
                 return true;
             }
         }

@@ -1,6 +1,7 @@
 package cn.propersoft.IoT.auth.controller;
 
 import cn.propersoft.IoT.auth.service.AuthService;
+import cn.propersoft.IoT.auth.service.TokenService;
 import cn.propersoft.IoT.response.ResultBody;
 import cn.propersoft.IoT.auth.vo.UserVO;
 import io.swagger.annotations.Api;
@@ -16,6 +17,8 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+
 
     @ResponseBody
     @ApiOperation(value = "获取token")

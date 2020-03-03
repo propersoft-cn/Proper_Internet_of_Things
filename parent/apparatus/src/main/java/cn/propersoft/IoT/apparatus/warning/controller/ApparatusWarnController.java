@@ -1,7 +1,6 @@
 package cn.propersoft.IoT.apparatus.warning.controller;
 
 import cn.propersoft.IoT.apparatus.async.service.ApparatusAsyncService;
-import cn.propersoft.IoT.apparatus.warning.serviceImpl.ApparatusWarnServiceImpl;
 import cn.propersoft.IoT.response.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
