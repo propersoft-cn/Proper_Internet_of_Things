@@ -1,5 +1,6 @@
 package cn.propersoft.IoT.apparatus.co2.controller;
 
+import cn.propersoft.IoT.apparatus.async.service.ApparatusAsyncService;
 import cn.propersoft.IoT.apparatus.co2.service.CO2Service;
 import cn.propersoft.IoT.response.ResultBody;
 import io.swagger.annotations.Api;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class CO2Controller {
 
     @Autowired
-    private CO2Service co2Service;
+    private ApparatusAsyncService apparatusAsyncService;
 
     @ResponseBody
     @GetMapping("/getCo2Data/{userId}/device")
     @ApiOperation(value = "获取设备数据(webSocket接口需要先建立连接)")
     public ResultBody getCo2Data(@PathVariable String userId) {
-        co2Service.getCo2Data(userId);
+        apparatusAsyncService.getCo2Data(userId);
         return ResultBody.success();
     }
 
