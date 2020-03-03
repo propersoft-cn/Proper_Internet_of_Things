@@ -70,9 +70,7 @@ public class DemoControllerTest extends AbstractSpringTest {
         demoVO.setName("test");
         demoVO.setName2("testtest");
         Map<String, Object> body = BeanUtil.beanToMap(demoVO);
-        String post = HttpUtil.createPost(addressUtils.getUrl() + "/demo/add")
-                .form(body).execute().body();
-
+        String post = HttpUtil.createPost(addressUtils.getUrl() + "/demo/add").form(body).addHeaders(header).execute().body();
         JSONObject jsonObject = JSONUtil.parseObj(post);
         String code = Convert.toStr(jsonObject.get("code"));
         Assert.isTrue(StrUtil.equals(code, "200"));
