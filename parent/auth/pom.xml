@@ -17,6 +17,12 @@
             <artifactId>core</artifactId>
             <version>${build.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.propersoft.IoT</groupId>
+            <artifactId>test</artifactId>
+            <version>${build.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

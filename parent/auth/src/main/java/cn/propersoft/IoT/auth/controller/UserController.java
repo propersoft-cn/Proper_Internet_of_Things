@@ -1,6 +1,7 @@
 package cn.propersoft.IoT.auth.controller;
 
 import cn.propersoft.IoT.auth.annotation.UserLoginToken;
+import cn.propersoft.IoT.auth.entity.UserEntity;
 import cn.propersoft.IoT.response.ResultBody;
 import cn.propersoft.IoT.auth.service.UserService;
 import cn.propersoft.IoT.auth.vo.UserVO;
@@ -56,5 +57,13 @@ public class UserController {
         return ResultBody.success(userService.update(id, oldPassword, newPassword));
     }
 
+    @ResponseBody
+    @UserLoginToken
+    @GetMapping("/find/{username}")
+    @ApiOperation(value = "根据用户名查询用户")
+    public ResultBody findByUsername(@PathVariable String username) {
+        UserEntity userEntity = userService.findByUsername(username);
+        return ResultBody.success(userEntity);
+    }
 
 }
