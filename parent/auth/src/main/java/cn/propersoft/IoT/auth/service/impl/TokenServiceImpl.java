@@ -9,6 +9,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import cn.propersoft.IoT.auth.service.TokenService;
 import cn.propersoft.IoT.auth.entity.UserEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ import java.util.Optional;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
     @Autowired
     private TokenRepository tokenRepository;
 
@@ -40,5 +42,19 @@ public class TokenServiceImpl implements TokenService {
     public TokenEntity findByUserId(String id) {
         Optional<TokenEntity> optionalTokenEntity = tokenRepository.findByUserId(id);
         return optionalTokenEntity.orElse(null);
+    }
+
+    @Override
+    public void deleteAllToken() {
+        tokenRepository.deleteAll();
+
+    }
+
+    @Override
+    public Boolean deleteToken(String token) {
+        String userId = JWT.decode(token).getAudience().get(0);
+        Optional<TokenEntity> entityOptional = tokenRepository.findByUserId(userId);
+        entityOptional.ifPresent(tokenEntity -> tokenRepository.delete(tokenEntity));
+        return true;
     }
 }

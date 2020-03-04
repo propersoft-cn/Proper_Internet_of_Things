@@ -12,6 +12,8 @@ import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.auth.entity.UserEntity;
 import cn.propersoft.IoT.auth.service.UserService;
 import cn.propersoft.IoT.auth.vo.UserVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Autowired
     private UserService userService;

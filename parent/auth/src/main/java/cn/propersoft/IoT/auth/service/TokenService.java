@@ -12,4 +12,8 @@ public interface TokenService {
     Boolean saveToken(TokenEntity tokenEntity);
 
     TokenEntity findByUserId(String id);
+
+    void deleteAllToken();
+
+    Boolean deleteToken(String token);
 }
