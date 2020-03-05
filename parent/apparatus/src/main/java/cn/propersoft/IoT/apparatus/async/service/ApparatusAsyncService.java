@@ -1,5 +1,6 @@
 package cn.propersoft.IoT.apparatus.async.service;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -11,6 +12,8 @@ import cn.propersoft.IoT.apparatus.co2.entity.CO2Entity;
 import cn.propersoft.IoT.apparatus.co2.service.CO2Service;
 import cn.propersoft.IoT.apparatus.shuiqin.service.ShuiQinService;
 import cn.propersoft.IoT.apparatus.warning.ApparatusThresholdProperties;
+import cn.propersoft.IoT.apparatus.warning.entity.ApparatusWarnEntity;
+import cn.propersoft.IoT.apparatus.warning.service.impl.ApparatusWarnService;
 import cn.propersoft.IoT.apparatus.warning.vo.ApparatusWarnVO;
 import cn.propersoft.IoT.apparatus.wenduAndshidu.entity.WenShiDuEntity;
 import cn.propersoft.IoT.apparatus.wenduAndshidu.service.WenShiDuService;
@@ -18,6 +21,7 @@ import cn.propersoft.IoT.apparatus.yali.entity.YaliEntity;
 import cn.propersoft.IoT.apparatus.yali.service.YaliService;
 import cn.propersoft.IoT.apparatus.yeweizhi.entity.YeWeiZhiEntity;
 import cn.propersoft.IoT.apparatus.yeweizhi.service.YeWeiZhiService;
+import cn.propersoft.IoT.core.utils.MyBeanUtils;
 import cn.propersoft.IoT.exception.BizException;
 import cn.propersoft.IoT.exception.CommonEnum;
 import cn.propersoft.IoT.websocket.server.WebSocketServer;
@@ -27,10 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ApparatusAsyncService {
@@ -59,6 +60,9 @@ public class ApparatusAsyncService {
 
     @Autowired
     private ApparatusThresholdProperties apparatusThresholdProperties;
+
+    @Autowired
+    private ApparatusWarnService apparatusWarnService;
 
 
     @Async
@@ -174,6 +178,8 @@ public class ApparatusAsyncService {
             JSONArray jsonArray = JSONUtil.parseArray(result);
             String message = jsonArray.toString();
             WebSocketServer.sendInfo(message, userId);
+            List<ApparatusWarnEntity> lists = (List<ApparatusWarnEntity>) MyBeanUtils.convert(result, ApparatusWarnEntity.class);
+            apparatusWarnService.saveAll(lists);
             result = new ArrayList<>();
             try {
                 Thread.sleep(1000L);
@@ -187,7 +193,13 @@ public class ApparatusAsyncService {
         YeWeiZhiEntity yeWeiZhiEntity = yeWeiZhiService.findOneByOrderByAddTimeDesc();
         if (yeWeiZhiEntity.getYewei() >= apparatusThresholdProperties.getYeWeiMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(yeWeiZhiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = yeWeiZhiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(yeWeiZhiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(yeWeiZhiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(yeWeiZhiEntity.getAddTime());
             apparatusWarnVO.setRealValue(yeWeiZhiEntity.getYewei());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getYeWeiMax());
@@ -197,7 +209,13 @@ public class ApparatusAsyncService {
 
         if (yeWeiZhiEntity.getYewei() <= apparatusThresholdProperties.getYeWeiMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(yeWeiZhiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = yeWeiZhiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(yeWeiZhiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(yeWeiZhiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(yeWeiZhiEntity.getAddTime());
             apparatusWarnVO.setRealValue(yeWeiZhiEntity.getYewei());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getYeWeiMin());
@@ -213,7 +231,13 @@ public class ApparatusAsyncService {
         YaliEntity yaliEntity = yaliService.findOneByOrderByAddTimeDesc();
         if (yaliEntity.getYaliNum() >= apparatusThresholdProperties.getYaLiMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(yaliEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = yaliEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(yaliEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(yaliEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(yaliEntity.getAddTime());
             apparatusWarnVO.setRealValue(yaliEntity.getYaliNum());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getYaLiMax());
@@ -223,7 +247,13 @@ public class ApparatusAsyncService {
 
         if (yaliEntity.getYaliNum() <= apparatusThresholdProperties.getYaLiMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(yaliEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = yaliEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(yaliEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(yaliEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(yaliEntity.getAddTime());
             apparatusWarnVO.setRealValue(yaliEntity.getYaliNum());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getYaLiMin());
@@ -236,7 +266,13 @@ public class ApparatusAsyncService {
         WenShiDuEntity wenShiDuEntity = wenShiDuService.findOneByOrderByAddTimeDesc();
         if (wenShiDuEntity.getWendu() >= apparatusThresholdProperties.getWsWenDuMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(wenShiDuEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = wenShiDuEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(wenShiDuEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(wenShiDuEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(wenShiDuEntity.getAddTime());
             apparatusWarnVO.setRealValue(wenShiDuEntity.getWendu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getWsWenDuMax());
@@ -246,7 +282,13 @@ public class ApparatusAsyncService {
 
         if (wenShiDuEntity.getWendu() <= apparatusThresholdProperties.getWsWenDuMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(wenShiDuEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = wenShiDuEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(wenShiDuEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(wenShiDuEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(wenShiDuEntity.getAddTime());
             apparatusWarnVO.setRealValue(wenShiDuEntity.getWendu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getWsWenDuMin());
@@ -256,7 +298,13 @@ public class ApparatusAsyncService {
 
         if (wenShiDuEntity.getShidu() >= apparatusThresholdProperties.getWsShiDuMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(wenShiDuEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = wenShiDuEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(wenShiDuEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(wenShiDuEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(wenShiDuEntity.getAddTime());
             apparatusWarnVO.setRealValue(wenShiDuEntity.getShidu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getWsShiDuMax());
@@ -267,7 +315,13 @@ public class ApparatusAsyncService {
 
         if (wenShiDuEntity.getShidu() <= apparatusThresholdProperties.getWsShiDuMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(wenShiDuEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = wenShiDuEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(wenShiDuEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(wenShiDuEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(wenShiDuEntity.getAddTime());
             apparatusWarnVO.setRealValue(wenShiDuEntity.getShidu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getWsShiDuMin());
@@ -283,7 +337,13 @@ public class ApparatusAsyncService {
         CO2Entity co2Entity = co2Service.findOneByOrderByAddTimeDesc();
         if (co2Entity.getCo2Num() >= apparatusThresholdProperties.getCo2Max()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(co2Entity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = co2Entity.getEquipmentName().length();
+            String sensor = StrUtil.sub(co2Entity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(co2Entity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(co2Entity.getAddTime());
             apparatusWarnVO.setRealValue(co2Entity.getCo2Num());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getCo2Max());
@@ -293,15 +353,19 @@ public class ApparatusAsyncService {
 
         if (co2Entity.getCo2Num() <= apparatusThresholdProperties.getCo2Min()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(co2Entity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = co2Entity.getEquipmentName().length();
+            String sensor = StrUtil.sub(co2Entity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(co2Entity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(co2Entity.getAddTime());
             apparatusWarnVO.setRealValue(co2Entity.getCo2Num());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getCo2Min());
             apparatusWarnVO.setWarnText("二氧化碳浓度低于报警阈值");
             result.add(apparatusWarnVO);
         }
-
-
     }
 
 
@@ -309,7 +373,13 @@ public class ApparatusAsyncService {
         ChaRuShiEntity chaRuShiEntity = chaRuShiService.findOneByOrderByAddTimeDesc();
         if (chaRuShiEntity.getWendu() >= apparatusThresholdProperties.getCWenDuMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaRuShiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaRuShiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaRuShiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaRuShiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaRuShiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaRuShiEntity.getWendu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getCWenDuMax());
@@ -319,7 +389,13 @@ public class ApparatusAsyncService {
 
         if (chaRuShiEntity.getWendu() <= apparatusThresholdProperties.getCWenDuMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaRuShiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaRuShiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaRuShiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaRuShiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaRuShiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaRuShiEntity.getWendu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getCWenDuMin());
@@ -333,7 +409,13 @@ public class ApparatusAsyncService {
         ChaPaiEntity chaPaiEntity = chaPaiService.findOneByOrderByAddTimeDesc();
         if (chaPaiEntity.getDianya() >= apparatusThresholdProperties.getDianYaMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaPaiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaPaiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaPaiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaPaiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaPaiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaPaiEntity.getDianya());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getDianYaMax());
@@ -343,7 +425,13 @@ public class ApparatusAsyncService {
 
         if (chaPaiEntity.getDianya() <= apparatusThresholdProperties.getDianYaMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaPaiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaPaiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaPaiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaPaiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaPaiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaPaiEntity.getDianya());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getDianYaMin());
@@ -353,7 +441,13 @@ public class ApparatusAsyncService {
 
         if (chaPaiEntity.getDianliu() >= apparatusThresholdProperties.getDianLiuMax()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaPaiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaPaiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaPaiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaPaiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaPaiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaPaiEntity.getDianliu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getDianLiuMax());
@@ -363,7 +457,13 @@ public class ApparatusAsyncService {
 
         if (chaPaiEntity.getDianliu() <= apparatusThresholdProperties.getDianLiuMin()) {
             ApparatusWarnVO apparatusWarnVO = new ApparatusWarnVO();
-            apparatusWarnVO.setDeviceId(chaPaiEntity.getEquipmentName());
+            apparatusWarnVO.setFloor("");
+            apparatusWarnVO.setOther("");
+            int length = chaPaiEntity.getEquipmentName().length();
+            String sensor = StrUtil.sub(chaPaiEntity.getEquipmentName(), 0, length - 2);
+            String deviceId = StrUtil.sub(chaPaiEntity.getEquipmentName(), length - 2, length);
+            apparatusWarnVO.setSensor(sensor);
+            apparatusWarnVO.setDeviceId(deviceId);
             apparatusWarnVO.setCreateTime(chaPaiEntity.getAddTime());
             apparatusWarnVO.setRealValue(chaPaiEntity.getDianliu());
             apparatusWarnVO.setThreshold(apparatusThresholdProperties.getDianLiuMin());
@@ -371,6 +471,5 @@ public class ApparatusAsyncService {
             result.add(apparatusWarnVO);
         }
     }
-
 
 }

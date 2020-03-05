@@ -10,7 +10,17 @@ public class ApparatusWarnVO implements Serializable {
 
     private static final long serialVersionUID = 1884665586926237258L;
 
+    /**
+     * 楼层
+     */
+    private String floor;
+
     private String deviceId;
+
+    /**
+     * 传感器
+     */
+    private String sensor;
 
     private String warnText;
 
@@ -19,6 +29,8 @@ public class ApparatusWarnVO implements Serializable {
     private Double realValue;
 
     private Date createTime;
+
+    private String other;
 
 
 }

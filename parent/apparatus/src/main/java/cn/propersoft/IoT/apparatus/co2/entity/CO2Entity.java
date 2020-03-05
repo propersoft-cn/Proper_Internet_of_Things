@@ -28,5 +28,8 @@ public class CO2Entity extends BaseEntity {
     @Column(nullable = false)
     private Date addTime;
 
+    @Column(precision = 6, scale = 0)
+    private Double mubiao;
+
 
 }
