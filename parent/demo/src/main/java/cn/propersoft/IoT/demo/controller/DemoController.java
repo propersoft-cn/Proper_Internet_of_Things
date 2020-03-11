@@ -1,5 +1,13 @@
 package cn.propersoft.IoT.demo.controller;
 
+import cn.hutool.core.lang.Console;
+import cn.hutool.cron.CronUtil;
+import cn.hutool.cron.Scheduler;
+import cn.hutool.db.Db;
+import cn.hutool.db.DbUtil;
+import cn.hutool.db.Entity;
+import cn.hutool.db.ds.simple.SimpleDataSource;
+import cn.hutool.db.sql.SqlExecutor;
 import cn.propersoft.IoT.demo.entity.DemoEntity;
 import cn.propersoft.IoT.demo.service.DemoService;
 import cn.propersoft.IoT.auth.annotation.UserLoginToken;
@@ -13,7 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @Api(tags = "无用测试接口")
@@ -84,7 +98,7 @@ public class DemoController {
         return ResponseEntity.ok("MSG SEND SUCCESS");
     }
 
-//    @ResponseBody
+//        @ResponseBody
 //    @GetMapping("/quartzTest1")
 //    @ApiOperation(value = "定时任务调度测试")
 //    public ResultBody quartzTest1(String f) {
@@ -98,12 +112,27 @@ public class DemoController {
 //            CronUtil.start();
 //        }
 //        CronUtil.setMatchSecond(true);
-//        String id = CronUtil.schedule("*/3 * * * * *", new Runnable() {
-//            @Override
-//            public void run() {
-//                Console.log("task running : 3s");
-//            }
-//        });
+//        if ("1".equals(f)) {
+//            String id = CronUtil.schedule("*/3 * * * * *", new Runnable() {
+//                @Override
+//                public void run() {
+//                    //TODO service function(a)
+//                    System.out.println(f);
+//                    Console.log("task running : 3s");
+//                }
+//            });
+//        }else {
+//            String id = CronUtil.schedule("0/40 * * * * *", new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println(f);
+//                    //TODO service function(a)
+//                    Console.log("task running : 1s");
+//                }
+//            });
+//        }
+//
+//
 //        //TODO 保存定时任务详情表中（taskid，元id，目id，备注）
 //        //TODO 建立连接获取数据,校验数据合法性
 //        //TODO 根据id获取映射配置
@@ -139,39 +168,82 @@ public class DemoController {
 //    @ResponseBody
 //    @GetMapping("/connDB")
 //    @ApiOperation(value = "连接数据源 ")
-//    public ResultBody connDB(String url, String username, String password) {
+//    public ResultBody connDB(String url, String username, String password) throws SQLException {
 //
 //        DataSource ds = new SimpleDataSource(url, username, password);
-//
-//        Connection conn = null;
-//        try {
-//            conn = ds.getConnection();
-//            // 执行非查询语句，返回影响的行数
-//            String sql = "CREATE TABLE `yali` (\n" +
-//                    "  `id` varchar(64) NOT NULL,\n" +
-//                    "  `add_time` datetime(6) NOT NULL,\n" +
-//                    "  `equipment_name` varchar(32) NOT NULL,\n" +
-//                    "  `yali_num` double DEFAULT NULL,\n" +
-//                    "  PRIMARY KEY (`id`)\n" +
-//                    ")";
-//            SqlExecutor.execute(conn, sql);
-////            int count = SqlExecutor.execute(conn, "UPDATE " + TABLE_NAME + " set field1 = ? where id = ?", 0, 0);
-////            LOGGER.info("影响行数：{}", count);
-//            // 执行非查询语句，返回自增的键，如果有多个自增键，只返回第一个
-////            Long generatedKey = SqlExecutor.executeForGeneratedKey(conn, "UPDATE " + TABLE_NAME + " set field1 = ? where id = ?", 0, 0);
-////            LOGGER.info("主键：{}", generatedKey);
-//
-//            /* 执行查询语句，返回实体列表，一个Entity对象表示一行的数据，Entity对象是一个继承自HashMap的对象，存储的key为字段名，value为字段值 */
-////            List<Entity> entityList = SqlExecutor.query(conn, "select * from " + TABLE_NAME + " where param1 = ?", new EntityListHandler(), "值");
-////            LOGGER.info("{}", entityList);
-//        } catch (SQLException e) {
-////            LOGGER.error(LOGGER, e, "SQL error!");
-//        } finally {
-//            DbUtil.close(conn);
+//        Db db = Db.use(ds);
+//        List<Entity> results = db.findAll(Entity.create("iot_user"));
+//        for (Entity result : results) {
+//            Set<Map.Entry<String, Object>> entries = result.entrySet();
+//            for (Map.Entry<String, Object> entry : entries) {
+//                String key = entry.getKey();
+//                Object value = entry.getValue();
+//            }
 //        }
+////        Connection conn = null;
+////        try {
+////            conn = ds.getConnection();
+//////            conn.
+////            // 执行非查询语句，返回影响的行数
+////            String sql = "CREATE TABLE `yali` (\n" +
+////                    "  `id` varchar(64) NOT NULL,\n" +
+////                    "  `add_time` datetime(6) NOT NULL,\n" +
+////                    "  `equipment_name` varchar(32) NOT NULL,\n" +
+////                    "  `yali_num` double DEFAULT NULL,\n" +
+////                    "  PRIMARY KEY (`id`)\n" +
+////                    ")";
+////            SqlExecutor.execute(conn, sql);
+//////            int count = SqlExecutor.execute(conn, "UPDATE " + TABLE_NAME + " set field1 = ? where id = ?", 0, 0);
+//////            LOGGER.info("影响行数：{}", count);
+////            // 执行非查询语句，返回自增的键，如果有多个自增键，只返回第一个
+//////            Long generatedKey = SqlExecutor.executeForGeneratedKey(conn, "UPDATE " + TABLE_NAME + " set field1 = ? where id = ?", 0, 0);
+//////            LOGGER.info("主键：{}", generatedKey);
+////
+////            /* 执行查询语句，返回实体列表，一个Entity对象表示一行的数据，Entity对象是一个继承自HashMap的对象，存储的key为字段名，value为字段值 */
+//////            List<Entity> entityList = SqlExecutor.query(conn, "select * from " + TABLE_NAME + " where param1 = ?", new EntityListHandler(), "值");
+//////            LOGGER.info("{}", entityList);
+////        } catch (SQLException e) {
+//////            LOGGER.error(LOGGER, e, "SQL error!");
+////        } finally {
+////            DbUtil.close(conn);
+////        }
 //
 //        return null;
 //    }
+
+
+    @ResponseBody
+    @GetMapping("/getTable")
+    @ApiOperation(value = "获取数据选下的所有表")
+    public ResultBody getTable(String url, String username, String password) throws SQLException {
+
+        Map<String, Object> tableNameMap = new HashMap<>();
+
+        Connection connection = DriverManager.getConnection(url, username, password);
+        //获得元数据
+        DatabaseMetaData metaData = connection.getMetaData();
+        //获得表信息
+        ResultSet tables = metaData.getTables(null, null, null, new String[]{"TABLE"});
+        while (tables.next()) {
+            Map<String, String> columnNameMap = new HashMap<>(); //保存字段名
+            //获得表名
+            String table_name = tables.getString("TABLE_NAME");
+            //通过表名获得所有字段名
+            ResultSet columns = metaData.getColumns(null, null, table_name, "%");
+            //获得所有字段名
+            while (columns.next()) {
+                //获得字段名
+                String column_name = columns.getString("COLUMN_NAME");
+                //获得字段类型
+                String type_name = columns.getString("TYPE_NAME");
+
+                columnNameMap.put(column_name, type_name);
+            }
+            tableNameMap.put(table_name, columnNameMap);
+        }
+        return ResultBody.success(tableNameMap);
+
+    }
 
 
 }
